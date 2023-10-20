@@ -1,20 +1,18 @@
 package homework2.task2;
 
-import java.util.Scanner;
-
-public class Sum
-{
+public class Sum {
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        int a = in.nextInt();
-        int b = in.nextInt();
-        int c = in.nextInt();
 
-        long sum = a;
-        for(int i=1; i<c; i++) {
-            a+=b;
-            sum+=a;
+        int start = Integer.parseInt(args[0]);
+        int difference = Integer.parseInt(args[1]);
+        int count = Integer.parseInt(args[2]);
+
+        long sum = start;
+        for (int i = 1; i < count; i++) {
+            start+=difference;
+            sum += start;
         }
-        System.out.println(sum);
+
+        System.out.println("Sum: " + sum);
     }
 }
