@@ -1,4 +1,4 @@
-package homework1.task2;
+package barnastik.homework1.task2;
 
 public class FizzBizz {
     public static void main(String[] args) {

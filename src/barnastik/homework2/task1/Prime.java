@@ -1,4 +1,4 @@
-package homework2.task1;
+package barnastik.homework2.task1;
 
 import java.util.Scanner;
 

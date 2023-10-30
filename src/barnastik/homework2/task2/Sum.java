@@ -1,4 +1,4 @@
-package homework2.task2;
+package barnastik.homework2.task2;
 
 public class Sum {
     public static void main(String[] args) {
