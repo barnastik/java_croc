@@ -1,6 +1,10 @@
-package barnastik.homework3.task6;
+package barnastik.homework3.task6.functions;
 
-class AnnotatedImage {
+import barnastik.homework3.task6.figure.Circle;
+import barnastik.homework3.task6.figure.Figure;
+import barnastik.homework3.task6.figure.Rectangle;
+
+public class AnnotatedImage {
 
     private final String imagePath;
 

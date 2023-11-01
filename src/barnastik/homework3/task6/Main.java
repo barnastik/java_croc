@@ -1,5 +1,10 @@
 package barnastik.homework3.task6;
 
+import barnastik.homework3.task6.figure.Circle;
+import barnastik.homework3.task6.figure.Rectangle;
+import barnastik.homework3.task6.functions.AnnotatedImage;
+import barnastik.homework3.task6.functions.Annotation;
+
 public class Main {
     public static void main(String[] args) {
 

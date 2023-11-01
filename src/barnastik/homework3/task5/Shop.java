@@ -24,7 +24,7 @@ public class Shop {
         appliances[7] = new ImportRobotVacuum("Import Robot Vacuum Cleaner", 600.0, "Automatic vacuum cleaner", "30x30x10 cm", 120, "India", true);
 
         for (Appliance appliance : appliances) {
-            System.out.println(appliance.toString());
+            System.out.println(appliance);
             System.out.println();
         }
     }

@@ -1,6 +1,8 @@
-package barnastik.homework3.task6;
+package barnastik.homework3.task6.functions;
 
-class Annotation {
+import barnastik.homework3.task6.figure.Figure;
+
+public class Annotation {
     private final String label;
     private final Figure figure;
 

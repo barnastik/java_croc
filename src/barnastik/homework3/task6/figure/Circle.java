@@ -1,6 +1,8 @@
-package barnastik.homework3.task6;
+package barnastik.homework3.task6.figure;
 
-class Circle extends Figure implements Movable {
+import barnastik.homework3.task6.functions.Movable;
+
+public class Circle extends Figure implements Movable {
     private int x;
     private int y;
     private int radius;

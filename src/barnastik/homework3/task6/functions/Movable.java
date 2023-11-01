@@ -1,4 +1,4 @@
-package barnastik.homework3.task6;
+package barnastik.homework3.task6.functions;
 
 public interface Movable {
 

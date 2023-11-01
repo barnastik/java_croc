@@ -1,4 +1,6 @@
-package barnastik.homework3.task6;
+package barnastik.homework3.task6.figure;
+
+import barnastik.homework3.task6.functions.Movable;
 
 public class Rectangle extends Figure implements Movable {
     private int x1;
