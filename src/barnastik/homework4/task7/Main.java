@@ -1,4 +1,10 @@
-package barnastik.homework4.task1;
+package barnastik.homework4.task7;
+
+import barnastik.homework4.task7.notification.Notification;
+import barnastik.homework4.task7.notification.NotificationService;
+import barnastik.homework4.task7.order.Order;
+import barnastik.homework4.task7.order.OrderService;
+import barnastik.homework4.task7.order.OrderServiceImpl;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

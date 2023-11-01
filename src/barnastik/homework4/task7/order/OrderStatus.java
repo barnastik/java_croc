@@ -1,4 +1,4 @@
-package barnastik.homework4.task1;
+package barnastik.homework4.task7.order;
 
 public enum OrderStatus {
     CREATED,
