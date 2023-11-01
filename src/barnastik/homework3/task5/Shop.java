@@ -1,4 +1,14 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task1;
+
+import barnastik.homework3.task5.good.imported.ImportFridge;
+import barnastik.homework3.task5.good.imported.ImportRobotVacuum;
+import barnastik.homework3.task5.good.imported.ImportStove;
+import barnastik.homework3.task5.good.imported.ImportWashingMachine;
+import barnastik.homework3.task5.good.Fridge;
+import barnastik.homework3.task5.good.RobotVacuum;
+import barnastik.homework3.task5.good.Stove;
+import barnastik.homework3.task5.good.WashingMachine;
+import barnastik.homework3.task5.good.Appliance;
 
 public class Shop {
     public static void main(String[] args) {
@@ -14,7 +24,7 @@ public class Shop {
         appliances[7] = new ImportRobotVacuum("Import Robot Vacuum Cleaner", 600.0, "Automatic vacuum cleaner", "30x30x10 cm", 120, "India", true);
 
         for (Appliance appliance : appliances) {
-            appliance.displayCharacteristics();
+            System.out.println(appliance.toString());
             System.out.println();
         }
     }

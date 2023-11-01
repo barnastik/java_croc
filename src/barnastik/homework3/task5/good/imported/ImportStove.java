@@ -1,11 +1,13 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good.imported;
 
-public class ImportRobotVacuum extends RobotVacuum{
+import barnastik.homework3.task5.good.Stove;
 
+public class ImportStove extends Stove {
     private String country;
     private boolean hasGuarantee;
-    public ImportRobotVacuum(String name, double price, String description, String dimensions, int batteryRuntime, String country, boolean hasGuarantee) {
-        super(name, price, description, dimensions, batteryRuntime);
+
+    public ImportStove(String name, double price, String description, String dimensions, int power, String country, boolean hasGuarantee) {
+        super(name, price, description, dimensions, power);
         this.country = country;
         this.hasGuarantee = hasGuarantee;
     }
@@ -37,4 +39,8 @@ public class ImportRobotVacuum extends RobotVacuum{
         return hasGuarantee;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\nManufacturer country: " + country + "\nHas Guarantee: " + (hasGuarantee ? "Yes" : "No");
+    }
 }

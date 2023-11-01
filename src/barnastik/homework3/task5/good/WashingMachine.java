@@ -1,6 +1,6 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good;
 
-class WashingMachine extends Appliance {
+public class WashingMachine extends Appliance {
     private int power;
     private int batteryRuntime;
     private boolean hasDryer;
@@ -39,5 +39,12 @@ class WashingMachine extends Appliance {
     }
     public boolean getHasDryer() {
         return hasDryer;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nPower: " + power + " W"
+                + "\nBattery Runtime: " + batteryRuntime + " minutes"
+                + "\nHas Dryer: " + (hasDryer ? "Yes" : "No");
     }
 }

@@ -1,6 +1,6 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good;
 
-class Fridge extends Appliance {
+public class Fridge extends Appliance {
     private int freezerTemperature;
 
     public Fridge(String name, double price, String description, String dimensions, int freezerTemperature) {
@@ -21,5 +21,10 @@ class Fridge extends Appliance {
     public int getFreezerTemperature() {
 
         return freezerTemperature;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nFreezer Temperature: " + freezerTemperature + "°C";
     }
 }

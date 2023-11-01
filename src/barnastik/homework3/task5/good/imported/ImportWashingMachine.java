@@ -1,6 +1,8 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good.imported;
 
-public class ImportWashingMachine extends WashingMachine{
+import barnastik.homework3.task5.good.WashingMachine;
+
+public class ImportWashingMachine extends WashingMachine {
     private String country;
     private boolean hasGuarantee;
 
@@ -35,4 +37,8 @@ public class ImportWashingMachine extends WashingMachine{
         return hasGuarantee;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\nManufacturer country: " + country + "\nHas Guarantee: " + (hasGuarantee ? "Yes" : "No");
+    }
 }

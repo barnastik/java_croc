@@ -1,6 +1,6 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good;
 
-class RobotVacuum extends Appliance {
+public class RobotVacuum extends Appliance {
     private int batteryRuntime;
 
     public RobotVacuum(String name, double price, String description, String dimensions, int batteryRuntime) {
@@ -23,5 +23,9 @@ class RobotVacuum extends Appliance {
         this.batteryRuntime = batteryRuntime;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + "\nBattery Runtime: " + batteryRuntime + " minutes";
+    }
 }
 

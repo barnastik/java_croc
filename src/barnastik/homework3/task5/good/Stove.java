@@ -1,6 +1,6 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good;
 
-class Stove extends Appliance {
+public class Stove extends Appliance {
     private int power;
 
     public Stove(String name, double price, String description, String dimensions, int power) {
@@ -19,5 +19,10 @@ class Stove extends Appliance {
     }
     public int getPower() {
         return power;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nPower: " + power + " W";
     }
 }

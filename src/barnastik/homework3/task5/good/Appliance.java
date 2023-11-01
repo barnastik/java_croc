@@ -1,6 +1,6 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good;
 
-abstract class Appliance {
+public abstract class Appliance {
     private String name;
     private double price;
     private String description;
@@ -46,6 +46,11 @@ abstract class Appliance {
     }
     public String getDimensions() {
         return dimensions;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + "\nPrice: $" + price + "\nDescription: " + description + "\nDimensions: " + dimensions;
     }
 
 }

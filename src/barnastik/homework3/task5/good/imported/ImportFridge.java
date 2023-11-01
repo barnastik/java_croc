@@ -1,4 +1,6 @@
-package barnastik.homework3.task5;
+package barnastik.homework3.task5.good.imported;
+
+import barnastik.homework3.task5.good.Fridge;
 
 public class ImportFridge extends Fridge {
     private String country;
@@ -33,6 +35,11 @@ public class ImportFridge extends Fridge {
     public boolean getHasGuarantee() {
 
         return hasGuarantee;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + "\nManufacturer country: " + country + "\nHas Guarantee: " + (hasGuarantee ? "Yes" : "No");
     }
 }
 
