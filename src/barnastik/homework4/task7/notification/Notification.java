@@ -3,12 +3,13 @@ package barnastik.homework4.task7.notification;
 import barnastik.homework4.task7.order.Item;
 import barnastik.homework4.task7.order.Order;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-public class Notification implements NotificationService {
-    @Override
-    public void sendNotification(Order order) {
+public class Notification {
+
+    public String sendNotification(Order order) {
         StringBuilder notificationBuilder = new StringBuilder();
         notificationBuilder.append("Уважаемый ")
                 .append(order.getCustomerName())
@@ -21,7 +22,7 @@ public class Notification implements NotificationService {
             notificationBuilder.append(item).append("\n");
         }
         double totalPrice = calculateTotalPrice(order.getItems());
-        LocalDateTime expirationDate = order.getDateAssembled().plusWeeks(2);
+        ZonedDateTime expirationDate = order.getDateAssembled().plusWeeks(2);
         notificationBuilder.append("\nСумма к оплате: ")
                 .append(String.format("%.2f", totalPrice))
                 .append("₽\n\n")
@@ -31,6 +32,7 @@ public class Notification implements NotificationService {
                 .append("С наилучшими пожеланиями, магазин \"Кошки и картошки\"");
         String notification = notificationBuilder.toString();
         // Отправка уведомления
+        return notification;
     }
 
     private double calculateTotalPrice(List<Item> items) {

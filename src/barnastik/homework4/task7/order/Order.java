@@ -1,21 +1,26 @@
 package barnastik.homework4.task7.order;
 
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
+import barnastik.homework3.task5.good.Appliance;
+
 import java.util.List;
 import java.util.ArrayList;
-
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 public class Order {
     private final String number;
-    private final LocalDateTime dateReceived;
-    private LocalDateTime dateAssembled;
-    private LocalDateTime dateDelivered;
+    private final ZonedDateTime dateReceived;
+    private ZonedDateTime dateAssembled;
+    private ZonedDateTime dateDelivered;
     private final List<Item> items;
     private final String customerName;
     private final String customerPhoneNumber;
     private OrderStatus status;
 
-    public Order(LocalDateTime dateReceived, List<String> items, String customerName, String customerPhoneNumber) {
-        this.number = generateOrderNumber(customerPhoneNumber);
+    public Order(ZonedDateTime dateReceived, List<Appliance> items, String customerName, String customerPhoneNumber) {
+        if (items.size() > 75) {
+            throw new IllegalArgumentException("More than 75 items");
+        }
         this.dateReceived = dateReceived;
         this.dateAssembled = null;
         this.dateDelivered = null;
@@ -23,41 +28,36 @@ public class Order {
         this.customerName = customerName;
         this.customerPhoneNumber = customerPhoneNumber;
         this.status = OrderStatus.CREATED;
+        this.number = generateOrderNumber(customerPhoneNumber);
     }
 
     private String generateOrderNumber(String phoneNumber) {
-        LocalDateTime now = LocalDateTime.now();
-        String year = String.format("%02d", now.getYear() % 100);
-        String month = String.format("%02d", now.getMonthValue());
-        String day = String.format("%02d", now.getDayOfMonth());
-        String hours = String.format("%02d", now.getHour());
-        String minutes = String.format("%02d", now.getMinute());
-        String seconds = String.format("%02d", now.getSecond());
-        String phoneNumberSuffix = phoneNumber.substring(phoneNumber.length() - 4);
-        return year + month + day + hours + minutes + seconds + phoneNumberSuffix;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
+        return dateReceived.format(formatter) + customerPhoneNumber.substring(customerPhoneNumber.length() - 4);
+
     }
 
     public String getNumber() {
         return number;
     }
 
-    public LocalDateTime getDateReceived() {
+    public ZonedDateTime getDateReceived() {
         return dateReceived;
     }
 
-    public LocalDateTime getDateAssembled() {
+    public ZonedDateTime getDateAssembled() {
         return dateAssembled;
     }
 
-    public void setDateAssembled(LocalDateTime dateAssembled) {
+    public void setDateAssembled(ZonedDateTime dateAssembled) {
         this.dateAssembled = dateAssembled;
     }
 
-    public LocalDateTime getDateDelivered() {
+    public ZonedDateTime getDateDelivered() {
         return dateDelivered;
     }
 
-    public void setDateDelivered(LocalDateTime dateDelivered) {
+    public void setDateDelivered(ZonedDateTime dateDelivered) {
         this.dateDelivered = dateDelivered;
     }
 
@@ -83,8 +83,8 @@ public class Order {
 
     public boolean canBeDelivered() {
         if (status == OrderStatus.COLLECTED) {
-            LocalDateTime expirationDate = dateAssembled.plusWeeks(2);
-            return expirationDate.isAfter(LocalDateTime.now());
+            ZonedDateTime expirationDate = dateAssembled.plusWeeks(2);
+            return expirationDate.isAfter(ZonedDateTime.now());
         }
         return false;
     }
