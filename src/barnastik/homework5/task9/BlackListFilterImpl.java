@@ -9,31 +9,31 @@ public class BlackListFilterImpl implements BlackListFilter {
 
     @Override
     public void filterComments(List<String> comments, Set<String> blackList) {
-        for (int i = 0; i < comments.size(); i++) {
-            String comment = comments.get(i);
-            for (String word : blackList) {
-                comment = comment.replaceAll("\\b" + word + "\\b", "*".repeat(word.length()));
-            }
-            comments.set(i, comment);
-        }
-    }
-
-    public static void main(String[] args) {
-        List<String> comments = new ArrayList<>();
-        comments.add("This is a good comment");
-        comments.add("Spam spam spam");
-        comments.add("I love this service");
-
-        Set<String> blackList = new HashSet<>();
-        blackList.add("spam");
-        blackList.add("Spam");
-
-        BlackListFilter filter = new BlackListFilterImpl();
-        filter.filterComments(comments, blackList);
-
+        List<String> newComments = new ArrayList<>();
         for (String comment : comments) {
-            System.out.println(comment);
+            newComments.add(newComment(comment, blackList));
         }
+        comments.clear();
+        comments.addAll(newComments);
+    }
+    private String newComment(String comment, Set<String> blackList) {
+
+        String[] words = comment.split("[\\s.,?!]+");
+
+        for (String word : words) {
+            String newWord = word.toLowerCase();
+            for (String blackWord : blackList) {
+                if (newWord.equals(blackWord)) {
+                    int len = word.length();
+                    String fixWord = "*".repeat(len);
+                    int i = comment.indexOf(word);
+                    StringBuilder newComment = new StringBuilder(comment);
+                    newComment.replace(i, i + len, fixWord);
+                    comment = newComment.toString();
+                }
+            }
+        }
+
+        return comment;
     }
 }
-
