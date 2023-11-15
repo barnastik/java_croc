@@ -21,9 +21,8 @@ public class BlackListFilterImpl implements BlackListFilter {
         String[] words = comment.split("[\\s.,?!]+");
 
         for (String word : words) {
-            String newWord = word.toLowerCase();
             for (String blackWord : blackList) {
-                if (newWord.equals(blackWord)) {
+                if (word.equalsIgnoreCase(blackWord)) {
                     int len = word.length();
                     String fixWord = "*".repeat(len);
                     int i = comment.indexOf(word);
