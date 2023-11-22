@@ -2,6 +2,12 @@ package barnastik.homework6.task11;
 
 import java.util.*;
 
+//исправлены названия (очень извиняюсь за них!)
+//исправлен конструктор
+//исправлена последоваательность проверок с null
+//исправлен equals
+//добавлено (перекрыто) хеширование
+
 public class Dish implements Comparable<Dish> {
 
     private String title;
@@ -11,22 +17,29 @@ public class Dish implements Comparable<Dish> {
     private int ratingCourtiers;
 
     public Dish(String title, Collection<String> ingredients, Category category, int ratingKing, int ratingCourtiers) {
-        this.title = title;
-        this.ingredients = ingredients;
+        setTitle(title);
+        setIngredients(ingredients);
         this.category = category;
-        this.ratingKing = ratingKing;
-        this.ratingCourtiers = ratingCourtiers;
+        setRatingKing(ratingKing);
+        setRatingCourtiers(ratingCourtiers);
     }
-
 
 
     @Override
     public boolean equals(Object object) {
-        if (getClass() != object.getClass() || object == null) return false;
         if (this == object) return true;
-        return false;
+        if (object == null || getClass() != object.getClass()) return false;
+        Dish dish = (Dish) object;
+        return Objects.equals(title, dish.title) &&
+                Objects.equals(ingredients, dish.ingredients)
+                && category == dish.category;
     }
 
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(title, ingredients, category);
+    }
 
     @Override
     public int compareTo(Dish o) {
@@ -39,7 +52,7 @@ public class Dish implements Comparable<Dish> {
         return ratingKing > o.ratingKing ? 1 : -1;
     }
 
-    public void settitle(String title) {
+    public void setTitle(String title) {
         if (title.isEmpty()) {
             throw new IllegalArgumentException("Sorry, the title can't be empty");
         }
@@ -53,7 +66,7 @@ public class Dish implements Comparable<Dish> {
         this.ingredients = ingredients;
     }
 
-    public void setratingKing(int rating) {
+    public void setRatingKing(int rating) {
         if (rating >= 0 && rating <= 100) {
             this.ratingKing = rating;
         } else {
@@ -61,7 +74,7 @@ public class Dish implements Comparable<Dish> {
         }
     }
 
-    public void setratingCourtiers(int rating) {
+    public void setRatingCourtiers(int rating) {
         if (rating >= 0 && rating <= 100) {
             this.ratingCourtiers = rating;
         } else {
@@ -70,7 +83,7 @@ public class Dish implements Comparable<Dish> {
     }
 
 
-    public String gettitle() {
+    public String getTitle() {
         return title;
     }
 
@@ -82,11 +95,11 @@ public class Dish implements Comparable<Dish> {
         return category;
     }
 
-    public int getratingKing() {
+    public int getRatingKing() {
         return ratingKing;
     }
 
-    public int getratingCourtiers() {
+    public int getRatingCourtiers() {
         return ratingCourtiers;
     }
 

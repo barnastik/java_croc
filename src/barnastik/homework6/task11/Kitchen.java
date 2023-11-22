@@ -1,29 +1,34 @@
 package barnastik.homework6.task11;
 
 import java.util.*;
+import java.util.function.Predicate;
 
+//поменяла kitchenerDish на kitchenerAndDishes, не придумала ничего креативней(
+//добавлена функция canKitchenerDish
+//добавлена функция update
+//добавлена toString
 public class Kitchen {
-    private HashMap<Kitchener, Set<Dish>> KitchenerDishes;
+    private static HashMap<Kitchener, Set<Dish>> kitchenerAndDishes;
 
     public Kitchen(Collection<Kitchener> Kitcheners) {
-        setKitchenerDishes(Kitcheners);
+        setKitchenerAndDishes(Kitcheners);
     }
 
-    public HashMap<Kitchener, Set<Dish>> getKitchenerDishes() {
-        return new HashMap<>(KitchenerDishes);
+    public HashMap<Kitchener, Set<Dish>> getKitchenerAndDishes() {
+        return new HashMap<>(kitchenerAndDishes);
     }
 
-    public void setKitchenerDishes(Collection<Kitchener> Kitcheners) {
+    public void setKitchenerAndDishes(Collection<Kitchener> Kitcheners) {
         if (Kitcheners.isEmpty()) {
             throw new IllegalArgumentException("No kitcheners");
         }
-        HashMap<Kitchener, Set<Dish>> newKitchenerDish = new HashMap<>();
+        HashMap<Kitchener, Set<Dish>> newKitchenerAndDishes = new HashMap<>();
         for (Kitchener Kitchener : Kitcheners) {
             if (Kitchener != null) {
-                newKitchenerDish.put(Kitchener, Kitchener.getDishes());
+                newKitchenerAndDishes.put(Kitchener, Kitchener.getDishes());
             }
         }
-        this.KitchenerDishes = newKitchenerDish;
+        this.kitchenerAndDishes = newKitchenerAndDishes;
     }
 
     
@@ -32,9 +37,9 @@ public class Kitchen {
         Objects.requireNonNull(Kitcheners);
         HashSet<Dish> menu = new HashSet<>();
         for (Kitchener Kitchener : Kitcheners) {
-            Set<Dish> dishes = KitchenerDishes.get(Kitchener);
+            Set<Dish> dishes = kitchenerAndDishes.get(Kitchener);
             for (Dish dish : dishes) {
-                if (kitchenerDish(dish, ingredients)) {
+                if (kitchenerAndDishes(dish, ingredients)) {
                     menu.add(dish);
                 }
             }
@@ -42,7 +47,7 @@ public class Kitchen {
         return new ArrayList<>(menu);
     }
 
-    private boolean kitchenerDish(Dish dish, Collection<String> Ingredients) {
+    private boolean kitchenerAndDishes(Dish dish, Collection<String> Ingredients) {
         if (!Ingredients.isEmpty()) {
             Set<String> ingredients = dish.getIngredients();
             for (String ingredient : ingredients) {
@@ -55,4 +60,42 @@ public class Kitchen {
         }
         return true;
     }
+
+    private static boolean canKitchenerDish(Dish dish, Collection<String> absentIngredients) {
+        if (absentIngredients != null && !absentIngredients.isEmpty()) {
+            for (String ingredient : dish.getIngredients()) {
+                for (String absentIngredient : absentIngredients) {
+                    if (ingredient.equalsIgnoreCase(absentIngredient)) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private static HashSet<Dish> update(HashSet<Dish> menu, Predicate<Dish> predicate) {
+        if (predicate != null) {
+            HashSet<Dish> newMenu = new HashSet<>(menu.size());
+            for (Dish d : menu) {
+                if (predicate.test(d)) {
+                    newMenu.add(d);
+                }
+            }
+            return newMenu;
+        }
+        return menu;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder();
+        for (Kitchener cook : kitchenerAndDishes.keySet()) {
+            out.append(cook.toString())
+                    .append('\n');
+        }
+        return out.toString();
+    }
+
+
 }
