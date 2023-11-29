@@ -45,26 +45,6 @@ public class ClientDao {
 
 
 
-    public Optional<Client> findClient(Integer id) throws SQLException {
-        Connection connection;
-        final String FIND_CLIENT = "SELECT * FROM Client WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_CLIENT);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        if (resultSet.next()) {
-            Client client = new Client();
-            client.setId(resultSet.getInt("id"));
-            client.setFirstName(resultSet.getString("first_name"));
-            client.setLastName(resultSet.getString("last_name"));
-            client.setPhoneNumber(resultSet.getString("phone_number"));
-            return Optional.of(client);
-        } else {
-            return Optional.empty();
-        }
-    }
-
-
     public void deleteClient(Integer id) throws SQLException {
         final String DELETE_CLIENT = "DELETE FROM Client WHERE id = ?";
         try (Connection connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
@@ -77,10 +57,11 @@ public class ClientDao {
 
 
 
-    public List<String> findClientPhoneNumbersBy(Pet pet) {
-    }
+    //public List<String> findClientPhoneNumbersBy(Pet pet) {
+    //}
 
     public List<Pet> getAllPetsOf(Client client) {
+        return null;
     }
 
 }
