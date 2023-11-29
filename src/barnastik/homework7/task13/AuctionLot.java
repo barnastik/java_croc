@@ -1,63 +1,67 @@
 package barnastik.homework7.task13;
 
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.concurrent.locks.Condition;
-import java.util.concurrent.locks.Lock;
+//переменные, используемые потоками, теперь volatile
+//изменена makeBid
+//добавлено имя лота и победитель
+//теперь чтение из файла
+//цена теперь типа BigDecimal
+//добавлен контроль параметров в public AuctionLot
+//теперь чтение цены (ставки) и победителя не блокирует всё (теперь переменные volatile)
+//добавлено выбрасывание ошибки при неправильной ставке цены
 
-class AuctionLot {
-    private double currentPrice;
-    private String currentBidder;
-    private long endTime;
-    private final Lock lock = new ReentrantLock();
-    private final Condition notExpired = lock.newCondition();
+import java.time.LocalDateTime;
+import java.math.BigDecimal;
 
-    public AuctionLot(double initialPrice, String initialBidder, long endTime) {
-        this.currentPrice = initialPrice;
-        this.currentBidder = initialBidder;
+public class AuctionLot {
+    private final String lotName;
+    private final LocalDateTime endTime;
+    volatile private BigDecimal currentPrice;
+    volatile private String currentBidder;
+    private String winner;
+
+    public AuctionLot(String lotName, LocalDateTime endTime, BigDecimal firstPrice) {
+        if (endTime == null || endTime.isBefore(LocalDateTime.now())) {
+            throw new IllegalArgumentException("неправильно установлено время");
+        }
+        if (lotName == null) {
+            throw new IllegalArgumentException("нет имени лота");
+        }
+        if (firstPrice == null || firstPrice.compareTo(new BigDecimal(0)) < 0) {
+            throw new IllegalArgumentException("неправильно установлена цена");
+        }
         this.endTime = endTime;
+        this.lotName = lotName;
+        this.currentPrice = firstPrice;
     }
 
-    public boolean makeBid(double newPrice, String bidder) {
-        lock.lock();
-        try {
-            if (System.currentTimeMillis() > endTime || newPrice <= currentPrice) {
-                return false;
+    public void makeBid(BigDecimal curPrice, String user) throws PriceException {
+        if (curPrice.compareTo(currentPrice) > 0) {
+            synchronized (this) {
+                if (!LocalDateTime.now().isBefore(endTime)) {
+                    throw new PriceException("уже всё закончилось");
+                } else if (!(curPrice.compareTo(currentPrice) > 0)) {
+                    throw new PriceException("новая цена должна быть выше предыдущей");
+                } else if (LocalDateTime.now().isBefore(endTime) && curPrice.compareTo(currentPrice) > 0) {
+                    currentPrice = curPrice;
+                    currentBidder = user;
+                }
             }
-            currentPrice = newPrice;
-            currentBidder = bidder;
-            notExpired.signalAll();
-            return true;
-        } finally {
-            lock.unlock();
         }
     }
 
-    public double getCurrentPrice() {
-        lock.lock();
-        try {
-            return currentPrice;
-        } finally {
-            lock.unlock();
-        }
+    public BigDecimal getPrice() {
+        return currentPrice;
     }
 
-    public String getCurrentBidder() {
-        lock.lock();
-        try {
-            return currentBidder;
-        } finally {
-            lock.unlock();
+    public String getWinnerNow() {
+        if (LocalDateTime.now().isAfter(endTime)) {
+            String nowWinner = currentBidder;
+            winner = nowWinner;
         }
+        return winner;
     }
 
-    public void waitForEnd() throws InterruptedException {
-        lock.lock();
-        try {
-            while (System.currentTimeMillis() < endTime) {
-                notExpired.await();
-            }
-        } finally {
-            lock.unlock();
-        }
-    }
 }
+
+
+
