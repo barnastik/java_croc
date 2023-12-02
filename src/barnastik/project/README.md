@@ -13,7 +13,7 @@
 В classes содержатся классы для работы: 
 - PollingStation (класс - станция)
 - ElectionTrafficLightService
-- ElectionSimulation (симуляция работы)
+- ElectionSimulation (для запуска симуляции запустить это)
 + enum Light
 
 В database содержатся классы для взаимодействия с базой данных:
