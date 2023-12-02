@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.*;
 
 public class ElectionTrafficLightService {
-    private List<PollingStation> pollingStations;
+    private final List<PollingStation> pollingStations;
 
     public ElectionTrafficLightService() {
         this.pollingStations = new ArrayList<>();
@@ -16,7 +16,7 @@ public class ElectionTrafficLightService {
 
         if (!pollingStations.contains(newStation)) {
             pollingStations.add(newStation);
-            Collections.sort(pollingStations, Collections.reverseOrder());
+            pollingStations.sort(Collections.reverseOrder());
             System.out.println("Станция '" + stationName + "' успешно добавлена.");
         } else {
             System.out.println("Станция с именем '" + stationName + "' уже существует. Дубликат не добавлен.");
@@ -27,7 +27,7 @@ public class ElectionTrafficLightService {
         PollingStation station = findStationByName(stationName);
         if (station != null) {
             station.setVotersCount(newVotersCount);
-            Collections.sort(pollingStations, Collections.reverseOrder());
+            pollingStations.sort(Collections.reverseOrder());
         } else {
             System.out.println("Избирательный участок с именем " + stationName + " не найден.");
         }
@@ -43,28 +43,19 @@ public class ElectionTrafficLightService {
     }
 
     public void displayTrafficLightStatusReverseOrder() {
-        Collections.sort(pollingStations, Comparator.comparingDouble(station ->
+        pollingStations.sort(Comparator.comparingDouble(station ->
                 (double) station.getCurrentLoad() / station.getCapacity()));
         System.out.println("Статус загруженности избирательных участков:");
 
         for (int i = 0; i <= pollingStations.size() - 1; i++) {
             PollingStation station = pollingStations.get(i);
             Light stationStatus = station.getTrafficLightStatus();
-            String colorCode;
-
-            switch (stationStatus) {
-                case GREEN:
-                    colorCode = "\u001B[32m"; // Зеленый цвет
-                    break;
-                case YELLOW:
-                    colorCode = "\u001B[33m"; // Желтый цвет
-                    break;
-                case RED:
-                    colorCode = "\u001B[31m"; // Красный цвет
-                    break;
-                default:
-                    colorCode = "\u001B[0m"; // Сброс цвета
-            }
+            String colorCode = switch (stationStatus) {
+                case GREEN -> "\u001B[32m"; // Зеленый цвет
+                case YELLOW -> "\u001B[33m"; // Желтый цвет
+                case RED -> "\u001B[31m"; // Красный цвет
+                // Сброс цвета
+            };
 
             System.out.println(colorCode + station.getStationName() + ": " + stationStatus + "\u001B[0m"); // Сброс цвета после вывода
         }
@@ -78,10 +69,6 @@ public class ElectionTrafficLightService {
         } else {
             System.out.println("Избирательный участок с именем " + stationName + " не найден.");
         }
-    }
-
-    public Set<PollingStation> getPollingStations() {
-        return new HashSet<>(pollingStations);
     }
 
     public void readStationsFromFile(String fileName) {
@@ -125,6 +112,7 @@ public class ElectionTrafficLightService {
             }
         }
 
+        assert lessLoadedStation != null;
         return lessLoadedStation.getStationName();
     }
 
@@ -152,7 +140,7 @@ public class ElectionTrafficLightService {
             }
         }
 
-        Collections.sort(pollingStations, Comparator.comparingDouble(station ->
+        pollingStations.sort(Comparator.comparingDouble(station ->
                 (double) station.getCurrentLoad() / station.getCapacity()));
 
         if (stationsOnStreet.isEmpty()) {
@@ -162,21 +150,12 @@ public class ElectionTrafficLightService {
 
             for (PollingStation station : stationsOnStreet) {
                 Light stationStatus = station.getTrafficLightStatus();
-                String colorCode;
+                String colorCode = switch (stationStatus) {
+                    case GREEN -> "\u001B[32m"; // Зеленый цвет
+                    case YELLOW -> "\u001B[33m"; // Желтый цвет
+                    case RED -> "\u001B[31m"; // Красный цвет
+                };
 
-                switch (stationStatus) {
-                    case GREEN:
-                        colorCode = "\u001B[32m"; // Зеленый цвет
-                        break;
-                    case YELLOW:
-                        colorCode = "\u001B[33m"; // Желтый цвет
-                        break;
-                    case RED:
-                        colorCode = "\u001B[31m"; // Красный цвет
-                        break;
-                    default:
-                        colorCode = "\u001B[0m"; // Сброс цвета
-                }
                 System.out.println(station.getStationName() + ": " + colorCode + station.getTrafficLightStatus() + "\u001B[0m");
             }
         }

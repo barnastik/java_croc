@@ -7,9 +7,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
-import static barnastik.db.FileReaderCsv.readCsv;
-import static barnastik.db.DbActions.closeDb;
 import static barnastik.project.database.DataBase.*;
+import static barnastik.project.database.FileReaderCsv.readCsv;
 
 public class ConsoleMenu {
 
@@ -24,47 +23,20 @@ public class ConsoleMenu {
             scanner.nextLine();
 
             switch (choice) {
-                case 1:
-                    addPollingStation(service, scanner);
-                    break;
-                case 2:
-                    updateVotersCount(service, scanner);
-                    break;
-                case 3:
-                    closePollingStation(service, scanner);
-                    break;
-                case 4:
-                    displayTrafficLightStatus(service);
-                    break;
-                case 5:
-                    searchLessLoadedStationOnStreet(service, scanner);
-                    break;
-                case 6:
-                    service.readStationsFromFile("./src/barnastik/project/files/station.txt");
-                    break;
-                case 7:
-                    viewIndStationInfo(service, scanner);
-                    break;
-                case 8:
-                    displayTrafficLightStatusByStreet(service, scanner);
-                    break;
-                case 9:
-                    viewDataBase();
-                    break;
-                case 10:
-                    addStationFromBD(service);
-                    break;
-                case 11:
-                    viewAllStations(service);
-                    break;
-                case 12:
-                    AverageVotersCount(service);
-                    break;
-                case 0:
-                    System.out.println("Выход из программы.");
-                    break;
-                default:
-                    System.out.println("Некорректный ввод. Пожалуйста, выберите действие из меню.");
+                case 1 -> addPollingStation(service, scanner);
+                case 2 -> updateVotersCount(service, scanner);
+                case 3 -> closePollingStation(service, scanner);
+                case 4 -> displayTrafficLightStatus(service);
+                case 5 -> searchLessLoadedStationOnStreet(service, scanner);
+                case 6 -> service.readStationsFromFile("./src/barnastik/project/files/station.txt");
+                case 7 -> viewIndStationInfo(service, scanner);
+                case 8 -> displayTrafficLightStatusByStreet(service, scanner);
+                case 9 -> viewDataBase();
+                case 10 -> addStationFromBD(service);
+                case 11 -> viewAllStations(service);
+                case 12 -> AverageVotersCount(service);
+                case 0 -> System.out.println("Выход из программы.");
+                default -> System.out.println("Некорректный ввод. Пожалуйста, выберите действие из меню.");
             }
         } while (choice != 0);
 
@@ -155,7 +127,7 @@ public class ConsoleMenu {
         }
     }
 
-    private static void addStationFromBD(ElectionTrafficLightService service) throws SQLException {
+    private static void addStationFromBD(ElectionTrafficLightService service) {
         String fileInfo = "./src/barnastik/project/database/stations.csv";
         try {
             dropTable();

@@ -3,8 +3,8 @@ package barnastik.project.database;
 import java.sql.SQLException;
 import java.util.List;
 
-import static barnastik.db.FileReaderCsv.readCsv;
 import static barnastik.project.database.DataBase.*;
+import static barnastik.project.database.FileReaderCsv.readCsv;
 
 public class Main {
 

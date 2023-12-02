@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.concurrent.*;
 
 public class ElectionSimulation {
-    private Set<PollingStation> pollingStations;
+    private final Set<PollingStation> pollingStations;
 
     public ElectionSimulation() {
         this.pollingStations = new CopyOnWriteArraySet<>();

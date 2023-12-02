@@ -4,7 +4,6 @@ import barnastik.project.classes.ElectionTrafficLightService;
 
 import java.sql.*;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataBase {
     private static final String URL = "jdbc:h2:~/test";
@@ -21,7 +20,7 @@ public class DataBase {
 
     public static void fillDb(List<List<String>> records) throws SQLException {
         String sql;
-        List<List<String>> stations = records.stream().distinct().collect(Collectors.toList());
+        List<List<String>> stations = records.stream().distinct().toList();
         sql = "INSERT INTO voting_station (id, st_name, address, capacity, voters_count) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(sql);
         for (List<String> station : stations) {
