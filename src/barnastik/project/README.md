@@ -15,6 +15,7 @@
 - ElectionTrafficLightService
 - ElectionSimulation (симуляция работы)
 + enum Light
+
 В database содержатся классы для взаимодействия с базой данных:
 - DataBase
 - FileReaderCsv
